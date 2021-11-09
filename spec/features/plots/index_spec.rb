@@ -10,6 +10,11 @@ RSpec.describe 'plots index page' do
     @plot_2 = @turing_garden.plots.create!(number: 26, size: "Small", direction: "West")
     @plot_3 = @library_garden.plots.create!(number: 2, size: "Small", direction: "South")
     @plot_4 = @other_garden.plots.create!(number: 738, size: "Medium", direction: "West")
+
+    @plant_1 = Plant.create!(name: "Red Bell Pepper", description: "Can grow anywhere!", days_to_harvest: 60)
+    @plant_2 = Plant.create!(name: "Basil", description: "Easy to care for.", days_to_harvest: 20)
+    @plant_3 = Plant.create!(name: "Purple Sweet Potato", description: "Prevers rich, well draining soil.", days_to_harvest: 100)
+    @plant_4 = Plant.create!(name: "Thyme", description: "Plant it and forget it.", days_to_harvest: 30)
   end
 
   it 'lists all plot numbers do' do
@@ -19,5 +24,11 @@ RSpec.describe 'plots index page' do
     expect(page).to have_content(@plot_2.number)
     expect(page).to have_content(@plot_3.number)
     expect(page).to have_content(@plot_4.number)
+  end
+
+  it 'lists all plants under each plot number' do
+    visit "/plots"
+
+
   end
 end
