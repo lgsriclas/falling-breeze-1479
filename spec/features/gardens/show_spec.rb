@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'plots index page' do
+RSpec.describe 'gardens show page' do
   before :each do
     @turing_garden = Garden.create!(name: 'Turing Community Garden', organic: true)
     @library_garden = Garden.create!(name: 'Public Library Garden', organic: true)
@@ -20,37 +20,11 @@ RSpec.describe 'plots index page' do
     @pp_2 = PlotPlant.create!(plot: @plot_1, plant: @plant_2)
   end
 
-  it 'lists all plot numbers do' do
-    visit "/plots"
-
-    expect(page).to have_content(@plot_1.number)
-    expect(page).to have_content(@plot_2.number)
-    expect(page).to have_content(@plot_3.number)
-    expect(page).to have_content(@plot_4.number)
-  end
-
-  it 'lists all plants under each plot number' do
-    visit "/plots"
+  it 'shows a list of plants in garden' do
+    visit "/gardens/#{@garden_1.id}/"
 
     expect(page).to have_content(@plant_1.name)
     expect(page).to have_content(@plant_2.name)
-  end
-
-  it 'has a link to remove plant from plot' do
-    visit "/plots"
-
-    expect(page).to have_link "Remove #{@plant_1.name}"
-    expect(page).to have_link "Remove #{@plant_2.name}"
-  end
-
-  it 'redirects to plots index after removing plant from plot ' do
-    visit "/plots"
-
-    within("#pp-#{@pp_1.id}") do
-      click_link "Remove #{@plant_1.name}"
-    end
-
-    expect(current_path).to eq("/plots")
-    expect(page).to_not have_content(@plant_1.name)
+    expect(page).to_not have_content(@plant_3.name)
   end
 end

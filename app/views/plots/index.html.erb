@@ -6,7 +6,7 @@
     <%= plant.name %>
     <% plant.plot_plants.each do |pp| %>
     <section id="pp-<%= pp.id %>">
-      <%= link_to "Remove #{plant.name}", "/plots" %>
+      <%= link_to "Remove #{plant.name}", "/plots/#{plot.id}/plants/#{plant.id}", method: :delete %>
       <br>
       <br>
       <% end %>
