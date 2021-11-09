@@ -16,8 +16,8 @@ RSpec.describe 'plots index page' do
     @plant_3 = Plant.create!(name: "Purple Sweet Potato", description: "Prevers rich, well draining soil.", days_to_harvest: 100)
     @plant_4 = Plant.create!(name: "Thyme", description: "Plant it and forget it.", days_to_harvest: 30)
 
-    PlotPlant.create!(plot: @plot_1, plant: @plant_1)
-    PlotPlant.create!(plot: @plot_1, plant: @plant_2)
+    @pp_1 = PlotPlant.create!(plot: @plot_1, plant: @plant_1)
+    @pp_2 = PlotPlant.create!(plot: @plot_1, plant: @plant_2)
   end
 
   it 'lists all plot numbers do' do
@@ -34,5 +34,22 @@ RSpec.describe 'plots index page' do
 
     expect(page).to have_content(@plant_1.name)
     expect(page).to have_content(@plant_2.name)
+  end
+
+  it 'has a link to remove plant from plot' do
+    visit "/plots"
+
+    expect(page).to have_link "Remove #{@plant_1.name}"
+    expect(page).to have_link "Remove #{@plant_2.name}"
+  end
+
+  it 'redirects to plots index after removing plant from plot ' do
+    visit "/plots"
+
+    within("#pp-#{@pp_1.id}") do
+      click_link "Remove #{@plant_1.name}"
+    end
+
+    expect(current_path).to eq("/plots")
   end
 end

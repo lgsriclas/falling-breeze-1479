@@ -3,7 +3,12 @@
 <% @plots.each do |plot| %>
   <h3><%= plot.number %></h3>
   <% plot.plants.each do |plant| %>
-  <%= plant.name %>
-  <br>
+    <%= plant.name %>
+    <% plant.plot_plants.each do |pp| %>
+    <section id="pp-<%= pp.id %>">
+      <%= link_to "Remove #{plant.name}", "/plots" %>
+      <br>
+      <br>
+      <% end %>
   <% end %>
 <% end %>
