@@ -1,1 +1,8 @@
 <h1><%= @garden.name %></h1>
+<h2>Plants:</h2>
+<p><% @garden.plots.each do |plot| %>
+  <% plot.plants.each do |plant| %>
+    <%= plant.name %>
+    <br></p>
+  <% end %>
+<% end %>
