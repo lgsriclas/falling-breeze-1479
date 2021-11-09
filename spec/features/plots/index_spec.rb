@@ -15,6 +15,9 @@ RSpec.describe 'plots index page' do
     @plant_2 = Plant.create!(name: "Basil", description: "Easy to care for.", days_to_harvest: 20)
     @plant_3 = Plant.create!(name: "Purple Sweet Potato", description: "Prevers rich, well draining soil.", days_to_harvest: 100)
     @plant_4 = Plant.create!(name: "Thyme", description: "Plant it and forget it.", days_to_harvest: 30)
+
+    PlotPlant.create!(plot: @plot_1, plant: @plant_1)
+    PlotPlant.create!(plot: @plot_1, plant: @plant_2)
   end
 
   it 'lists all plot numbers do' do
@@ -29,6 +32,7 @@ RSpec.describe 'plots index page' do
   it 'lists all plants under each plot number' do
     visit "/plots"
 
-
+    expect(page).to have_content(@plant_1.name)
+    expect(page).to have_content(@plant_2.name)
   end
 end
