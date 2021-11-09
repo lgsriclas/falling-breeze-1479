@@ -1,5 +1,10 @@
-class PlotController < ApplicationController
+class PlotsController < ApplicationController
   def index
-    @plot = Plot.find(params[:id])
-  end 
+    @plots = Plot.all
+  end
+
+  private
+  def plot_params
+    params.permit(:id, :number, :size, :direction)
+  end
 end
