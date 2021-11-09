@@ -18,12 +18,30 @@ RSpec.describe 'gardens show page' do
 
     @pp_1 = PlotPlant.create!(plot: @plot_1, plant: @plant_1)
     @pp_2 = PlotPlant.create!(plot: @plot_1, plant: @plant_2)
+    @pp_3 = PlotPlant.create!(plot: @plot_1, plant: @plant_3)
+    @pp_4 = PlotPlant.create!(plot: @plot_1, plant: @plant_1)
   end
 
   it 'shows a list of plants in garden' do
     visit "/gardens/#{@turing_garden.id}/"
 
     expect(page).to have_content(@turing_garden.name)
+    expect(page).to have_content(@plant_1.name)
+    expect(page).to have_content(@plant_2.name)
+    expect(page).to_not have_content(@plant_4.name)
+  end
+
+  xit 'does not show duplicate plants' do
+    visit "/gardens/#{@turing_garden.id}/"
+
+    expect(page).to have_content(@plant_1.name)
+    expect(page).to have_content(@plant_2.name)
+    expect(page).to_not have_content(@plant_3.name)
+  end
+
+  it 'only shows plants that take less than 100 days to harvest' do
+    visit "/gardens/#{@turing_garden.id}/"
+
     expect(page).to have_content(@plant_1.name)
     expect(page).to have_content(@plant_2.name)
     expect(page).to_not have_content(@plant_3.name)
